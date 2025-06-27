@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(title=~{::title}, content=~{::div#content})}">
+<head>
+    <title>Dashboard Thống Kê</title>
+</head>
+<body>
+<div id="content" class="bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Dashboard Thống Kê Hiến Máu</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Thống kê tổng quan -->
+        <div class="bg-red-50 p-6 rounded-lg shadow-inner">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Thống kê Tổng quan</h3>
+            <p class="text-gray-700 mb-2">Tổng số người đăng ký: <span class="font-bold text-red-600" th:text="${totalUsers}"></span></p>
+            <p class="text-gray-700">Tổng số người sẵn sàng hiến máu: <span class="font-bold text-green-600" th:text="${totalReadyDonors}"></span></p>
+        </div>
+
+        <!-- Thống kê theo nhóm máu -->
+        <div class="bg-blue-50 p-6 rounded-lg shadow-inner">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Số người sẵn sàng hiến máu theo nhóm máu</h3>
+            <ul class="list-disc list-inside text-gray-700">
+                <li th:each="entry : ${bloodGroupReadyCounts}">
+                    <span th:text="${entry.key.name()}"></span>:
+                    <span th:text="${entry.value}"></span> người
+                    (<span th:text="${totalReadyDonors == 0 ? '0.0' : #numbers.formatDecimal( (entry.value * 100.0 / totalReadyDonors), 0, 1) + '%'}"></span>)
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bảng tất cả người dùng -->
+    <h3 class="text-xl font-semibold text-gray-800 mb-4">Danh sách tất cả Người Dùng</h3>
+    <div th:if="${allUsers.empty}" class="bg-blue-100 text-blue-700 p-4 rounded-md text-center">
+        <p>Chưa có người dùng nào được đăng ký.</p>
+    </div>
+    <div th:unless="${allUsers.empty}" class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
+            <thead>
+            <tr class="table-header">
+                <th class="py-3 px-6 text-left">ID</th>
+                <th class="py-3 px-6 text-left">Tên</th>
+                <th class="py-3 px-6 text-left">Email</th>
+                <th class="py-3 px-6 text-left">Nhóm máu</th>
+                <th class="py-3 px-6 text-left">Địa chỉ</th>
+                <th class="py-3 px-6 text-left">Sẵn sàng hiến</th>
+                <th class="py-3 px-6 text-left">Lần hiến cuối</th>
+                <th class="py-3 px-6 text-left">Vai trò</th>
+            </tr>
+            </thead>
+            <tbody class="text-gray-700">
+            <tr th:each="user, iterStat : ${allUsers}" th:classappend="${iterStat.odd} ? 'table-row-odd' : 'table-row-even'">
+                <td class="py-3 px-6" th:text="${user.id}"></td>
+                <td class="py-3 px-6" th:text="${user.name}"></td>
+                <td class="py-3 px-6" th:text="${user.email}"></td>
+                <td class="py-3 px-6" th:text="${user.bloodGroup}"></td>
+                <td class="py-3 px-6" th:text="${user.address}"></td>
+                <td class="py-3 px-6" th:text="${userService.getDonationReadyStatus(user)}"></td>
+                <td class="py-3 px-6" th:text="${user.lastDonation != null ? user.lastDonation : 'N/A'}"></td>
+                <td class="py-3 px-6" th:text="${user.role}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

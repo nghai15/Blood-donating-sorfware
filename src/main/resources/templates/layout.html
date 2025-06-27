@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title ?: 'Hệ Thống Hỗ Trợ Hiến Máu'}"></title>
+    <!-- Tailwind CSS CDN - Đảm bảo dòng này chính xác và không có ký tự thừa -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tùy chỉnh font Inter cho toàn bộ ứng dụng */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Các lớp CSS Tailwind tùy chỉnh được khai báo bằng @apply trong style block để tối ưu */
+        .header-bg {
+            background-color: #ef4444; /* tailwind red-500 */
+        }
+        .nav-link:hover {
+            background-color: #dc2626; /* tailwind red-600 */
+        }
+        .btn-primary {
+            /* Các lớp Tailwind được áp dụng cho btn-primary */
+            @apply bg-red-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition duration-300;
+        }
+        .table-header {
+            /* Các lớp Tailwind cho tiêu đề bảng */
+            @apply bg-gray-200 text-gray-700 uppercase text-sm leading-normal;
+        }
+        .table-row-odd {
+            /* Các lớp Tailwind cho hàng lẻ */
+            @apply bg-white;
+        }
+        .table-row-even {
+            /* Các lớp Tailwind cho hàng chẵn */
+            @apply bg-gray-50;
+        }
+    </style>
+    <!-- Thêm font Inter từ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<!-- Fragment chính của layout, các trang con sẽ gọi fragment này -->
+<div th:fragment="layout(title, content)">
+
+    <!-- Header của ứng dụng -->
+    <header class="header-bg text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">Hệ Thống Hỗ Trợ Hiến Máu</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a th:href="@{/}" class="nav-link py-2 px-3 rounded-md hover:shadow-lg transition duration-300">Trang chủ</a></li>
+                    <li><a th:href="@{/register}" class="nav-link py-2 px-3 rounded-md hover:shadow-lg transition duration-300">Đăng ký Hiến máu</a></li>
+                    <li><a th:href="@{/donors}" class="nav-link py-2 px-3 rounded-md hover:shadow-lg transition duration-300">Tìm Người Hiến máu</a></li>
+                    <li><a th:href="@{/emergency_request}" class="nav-link py-2 px-3 rounded-md hover:shadow-lg transition duration-300">Yêu cầu Khẩn cấp</a></li>
+                    <li><a th:href="@{/dashboard}" class="nav-link py-2 px-3 rounded-md hover:shadow-lg transition duration-300">Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Nội dung chính của trang con sẽ được chèn vào đây -->
+    <main class="flex-grow container mx-auto mt-8 p-6 bg-white rounded-lg shadow-xl">
+        <div th:replace="${content}">
+            <!-- Nội dung cụ thể của từng trang sẽ được chèn vào đây -->
+        </div>
+    </main>
+
+    <!-- Footer của ứng dụng -->
+    <footer class="bg-gray-800 text-white p-4 mt-8 text-center">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Hệ Thống Hỗ Trợ Hiến Máu. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>

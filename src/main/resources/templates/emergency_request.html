@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(title=~{::title}, content=~{::div#content})}">
+<head>
+    <title>Yêu cầu máu Khẩn cấp</title>
+</head>
+<body>
+<div id="content" class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Yêu cầu máu Khẩn cấp</h2>
+
+    <form th:action="@{/emergency_request}" th:object="${donationRequest}" method="post" class="space-y-6">
+        <div>
+            <label for="neededBloodGroup" class="block text-gray-700 text-sm font-bold mb-2">Nhóm máu cần:</label>
+            <select id="neededBloodGroup" th:field="*{neededBloodGroup}" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <option value="">Chọn nhóm máu</option>
+                <option th:each="group : ${bloodGroups}" th:value="${group}" th:text="${group}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="quantity" class="block text-gray-700 text-sm font-bold mb-2">Số lượng cần (đơn vị):</label>
+            <input type="number" id="quantity" th:field="*{quantity}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required min="1">
+        </div>
+        <div class="flex items-center">
+            <input type="checkbox" id="emergency" th:field="*{emergency}" class="form-checkbox h-5 w-5 text-red-600 rounded">
+            <label for="emergency" class="ml-2 text-gray-700 text-sm font-bold">Yêu cầu khẩn cấp?</label>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn-primary w-full md:w-auto px-8 py-3">Gửi yêu cầu</button>
+        </div>
+    </form>
+
+    <div th:if="${param.success}" class="mt-6 p-3 bg-green-100 text-green-700 rounded-md text-center">
+        Yêu cầu máu khẩn cấp đã được gửi thành công!
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(title=~{::title}, content=~{::div#content})}">
+<head>
+    <title>Trang chủ - Hệ Thống Hỗ Trợ Hiến Máu</title>
+</head>
+<body>
+<div id="content" class="text-center py-10">
+    <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Chào mừng bạn!</h2>
+    <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+        Hệ thống hỗ trợ hiến máu của chúng tôi là cầu nối giữa những người có tấm lòng vàng muốn chia sẻ sự sống và những bệnh nhân đang cần máu khẩn cấp.
+        Hãy cùng chúng tôi xây dựng một cộng đồng khỏe mạnh và nhân ái.
+    </p>
+    <div class="space-x-4">
+        <a th:href="@{/register}" class="btn-primary">Đăng ký Hiến máu ngay</a>
+        <a th:href="@{/donors}" class="btn-primary bg-blue-500 hover:bg-blue-600">Tìm người Hiến máu</a>
+    </div>
+
+    <div class="mt-12">
+        <h3 class="text-3xl font-bold text-gray-800 mb-4">Về chúng tôi</h3>
+        <p class="text-gray-600 max-w-3xl mx-auto">
+            Chúng tôi cung cấp một nền tảng toàn diện giúp quản lý thông tin người hiến máu, nhu cầu máu, và hỗ trợ các trường hợp khẩn cấp. Mục tiêu của chúng tôi là đơn giản hóa quá trình hiến máu, giúp kết nối nhanh chóng giữa người hiến và người nhận, đảm bảo nguồn máu luôn sẵn sàng cứu người.
+        </p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-red-50 p-6 rounded-lg shadow-md">
+            <h4 class="text-xl font-semibold text-gray-800 mb-3">Tài liệu về các loại máu</h4>
+            <p class="text-gray-600">Tìm hiểu sâu hơn về các nhóm máu, khả năng tương thích và tầm quan trọng của từng loại.</p>
+        </div>
+        <div class="bg-red-50 p-6 rounded-lg shadow-md">
+            <h4 class="text-xl font-semibold text-gray-800 mb-3">Blog chia sẻ kinh nghiệm</h4>
+            <p class="text-gray-600">Đọc những câu chuyện cảm động và lời khuyên hữu ích từ cộng đồng người hiến máu.</p>
+        </div>
+        <div class="bg-red-50 p-6 rounded-lg shadow-md">
+            <h4 class="text-xl font-semibold text-gray-800 mb-3">Hỗ trợ khẩn cấp 24/7</h4>
+            <p class="text-gray-600">Hệ thống của chúng tôi luôn sẵn sàng kết nối bạn với nguồn máu cần thiết trong những tình huống cấp bách.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

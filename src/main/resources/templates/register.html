@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(title=~{::title}, content=~{::div#content})}">
+<head>
+    <title>Đăng ký Người Hiến Máu</title>
+</head>
+<body>
+<div id="content" class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Đăng ký Người Hiến Máu</h2>
+
+    <form th:action="@{/register}" th:object="${user}" method="post" class="space-y-6">
+        <div>
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Họ và tên:</label>
+            <input type="text" id="name" th:field="*{name}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+        <div>
+            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+            <input type="email" id="email" th:field="*{email}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+        <div>
+            <label for="bloodGroup" class="block text-gray-700 text-sm font-bold mb-2">Nhóm máu:</label>
+            <select id="bloodGroup" th:field="*{bloodGroup}" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <option value="">Chọn nhóm máu</option>
+                <option th:each="group : ${bloodGroups}" th:value="${group}" th:text="${group}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="address" class="block text-gray-700 text-sm font-bold mb-2">Địa chỉ:</label>
+            <input type="text" id="address" th:field="*{address}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+        <div>
+            <label for="lastDonationDateStr" class="block text-gray-700 text-sm font-bold mb-2">Ngày hiến máu gần nhất (YYYY-MM-DD):</label>
+            <input type="date" id="lastDonationDateStr" name="lastDonationDateStr" th:value="${user.lastDonation}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <p class="text-sm text-gray-500 mt-1">Để trống nếu chưa hiến máu hoặc không nhớ chính xác. Mặc định 4 tháng trước nếu không nhập.</p>
+        </div>
+        <div class="flex items-center">
+            <input type="checkbox" id="readyToDonate" th:field="*{readyToDonate}" class="form-checkbox h-5 w-5 text-red-600 rounded">
+            <label for="readyToDonate" class="ml-2 text-gray-700 text-sm font-bold">Sẵn sàng hiến máu?</label>
+        </div>
+        <div>
+            <label for="role" class="block text-gray-700 text-sm font-bold mb-2">Vai trò:</label>
+            <select id="role" th:field="*{role}" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <option th:each="r : ${roles}" th:value="${r}" th:text="${r}" th:selected="${r.name() == 'MEMBER'}"></option>
+            </select>
+            <p class="text-sm text-gray-500 mt-1">Thường là MEMBER cho người hiến máu.</p>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn-primary w-full md:w-auto px-8 py-3">Đăng ký</button>
+        </div>
+    </form>
+
+    <div th:if="${param.registered}" class="mt-6 p-3 bg-green-100 text-green-700 rounded-md text-center">
+        Đăng ký thành công!
+    </div>
+</div>
+</body>
+</html>
