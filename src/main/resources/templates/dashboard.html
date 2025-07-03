@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="flex h-screen bg-gray-100">
 <aside class="w-64 bg-white shadow-lg flex flex-col justify-between py-6">
@@ -105,11 +106,71 @@
 
         <div class="mt-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Biểu đồ phân bố nhóm máu</h2>
-            <div class="bg-gray-50 p-6 rounded-lg shadow h-64 flex items-center justify-center text-gray-500">
-                Biểu đồ sẽ được hiển thị tại đây
+            <div class="bg-white p-6 rounded-lg shadow h-[500px]">
+                <canvas id="bloodGroupChart" class="w-full h-full"></canvas>
             </div>
         </div>
     </div>
 </main>
+<script th:inline="javascript">
+    // Lấy dữ liệu từ Thymeleaf Map
+    const bloodGroupData = /*[[${bloodGroupReadyCounts}]]*/ {};
+
+    // Chuyển sang 2 mảng: labels và data
+    const labels = Object.keys(bloodGroupData).map(k =>
+        k.replace("_POS", " Rh+").replace("_NEG", " Rh-").replace("_", "")
+    );
+    const values = Object.values(bloodGroupData);
+
+    const ctx = document.getElementById('bloodGroupChart').getContext('2d');
+    const bloodGroupChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Người sẵn sàng hiến',
+                data: values,
+                backgroundColor: [
+                    '#f87171', '#fb923c', '#facc15', '#4ade80',
+                    '#60a5fa', '#a78bfa', '#f472b6', '#94a3b8'
+                ],
+                borderRadius: 6,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Nhóm máu'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    },
+                    title: {
+                        display: true,
+                        text: 'Số người'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#fef2f2',
+                    titleColor: '#dc2626',
+                    bodyColor: '#dc2626'
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>
