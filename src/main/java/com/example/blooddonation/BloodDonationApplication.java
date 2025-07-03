@@ -1,4 +1,4 @@
-package com.example.blooddonation; // Đảm bảo đúng package name
+package com.example.blooddonation; 
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
