@@ -21,6 +21,12 @@
     <nav class="flex-grow">
         <ul>
             <li class="mb-2">
+                <a th:href="@{/dashboard}" class="flex items-center p-3 text-gray-700 hover:bg-gray-200 rounded-lg mx-3">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="mb-2">
                 <a th:href="@{/blog}" class="flex items-center p-3 text-gray-700 hover:bg-gray-200 rounded-lg mx-3">
                     <i class="fas fa-th-large mr-3"></i>
                     <span>Blog</span>
@@ -44,12 +50,7 @@
                     <span>Yêu Cầu Khẩn Cấp</span>
                 </a>
             </li>
-            <li class="mb-2">
-                <a th:href="@{/dashboard}" class="flex items-center p-3 text-gray-700 hover:bg-gray-200 rounded-lg mx-3">
-                    <i class="fas fa-chart-line mr-3"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
+            
         </ul>
     </nav>
     <div class="flex justify-center mt-auto">
