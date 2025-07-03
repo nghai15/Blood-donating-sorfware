@@ -1,1 +1,132 @@
 /* Custom styles go here. Tailwind CSS is used primarily. */
+
+/* === Base Styles & Overrides === */
+body {
+    /* Tailwind's bg-gray-100 should handle this, but for safety */
+    background-color: #f3f4f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar Navigation Active Item */
+.active-nav-item {
+    background-color: #f3f4f6; /* Màu nền xám nhạt */
+    color: #ef4444; /* Màu chữ đỏ */
+    font-weight: 600;
+}
+
+.active-nav-item i {
+    color: #ef4444; /* Icon màu đỏ */
+}
+
+/* === Hero Section Background Shapes === */
+.hero-section {
+    position: relative;
+    background-color: #ef4444; /* Tailwind bg-red-600 */
+    color: white;
+    padding: 2.5rem; /* Tailwind p-10 */
+    border-radius: 0.5rem; /* Tailwind rounded-lg */
+    overflow: hidden; /* Quan trọng để các hình dạng không tràn ra ngoài */
+}
+
+.hero-bg-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Đảm bảo không chặn tương tác với nội dung */
+}
+
+.hero-bg-shapes::before,
+.hero-bg-shapes::after {
+    content: '';
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.1); /* Màu trắng mờ */
+    border-radius: 50%; /* Hình tròn */
+    filter: blur(20px); /* Làm mờ */
+}
+
+.hero-bg-shapes::before {
+    width: 200px;
+    height: 200px;
+    top: -50px;
+    right: -50px;
+    transform: rotate(45deg); /* Xoay nhẹ */
+}
+
+.hero-bg-shapes::after {
+    width: 300px;
+    height: 300px;
+    bottom: -100px;
+    left: -100px;
+    transform: rotate(-30deg); /* Xoay nhẹ */
+}
+
+/* Thêm một hình dạng khác nếu muốn giống ảnh hơn */
+.hero-bg-shapes .shape-blob {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.15); /* Màu trắng mờ hơn */
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; /* Hình blob */
+    filter: blur(15px);
+    width: 150px;
+    height: 150px;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%) rotate(15deg);
+}
+
+/* Animation cho các hình dạng (tùy chọn, để làm bắt mắt hơn) */
+@keyframes blob-animation {
+    0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: scale(1) rotate(0deg); }
+    33% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; transform: scale(1.05) rotate(10deg); }
+    66% { border-radius: 50% 50% 50% 50% / 60% 40% 60% 40%; transform: scale(0.95) rotate(-5deg); }
+}
+
+.hero-bg-shapes .shape-blob {
+    animation: blob-animation 10s infinite alternate;
+}
+
+/* === Custom Button for Hero Section === */
+.btn-hero {
+    /* Tailwind classes đã có trong HTML */
+    /* background-color: white; */
+    /* color: #ef4444; */
+    /* font-weight: 600; */
+    /* padding: 0.75rem 2rem; */
+    /* border-radius: 9999px; */
+    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
+    /* transition: background-color 0.3s ease; */
+}
+
+.btn-hero:hover {
+    /* background-color: #f3f4f6; (Tailwind hover:bg-gray-100) */
+}
+
+/* === Feature Card Icons === */
+.icon-placeholder {
+    /* Tailwind classes đã có trong HTML */
+    /* background-color: (tùy theo màu của card); */
+    /* border-radius: 9999px; */
+    /* width: 5rem; */
+    /* height: 5rem; */
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* margin-bottom: 1rem; */
+    /* text-color: (tùy theo màu của card); */
+    /* font-size: 1.875rem; */
+}
+
+/* Logo Bear (nếu dùng div thay vì img) */
+.logo-bear {
+    /* Tailwind classes đã có trong HTML */
+    /* background-color: #ef4444; */
+    /* border-radius: 9999px; */
+    /* width: 5rem; */
+    /* height: 5rem; */
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* text-white; */
+    /* text-4xl; */
+}
