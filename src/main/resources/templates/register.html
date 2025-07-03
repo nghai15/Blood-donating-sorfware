@@ -1,57 +1,120 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout(title=~{::title}, content=~{::div#content})}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Đăng ký Người Hiến Máu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký Người Dùng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body>
-<div id="content" class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Đăng ký Người Hiến Máu</h2>
-
-    <form th:action="@{/register}" th:object="${user}" method="post" class="space-y-6">
-        <div>
-            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Họ và tên:</label>
-            <input type="text" id="name" th:field="*{name}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+<body class="flex h-screen bg-gray-100">
+<aside class="w-64 bg-white shadow-lg flex flex-col justify-between py-6">
+    <div class="flex flex-col items-center mb-10">
+        <div class="logo-bear w-20 h-20 bg-red-500 rounded-full flex items-center justify-center text-white text-4xl mb-4">
+            <i class="fas fa-paw"></i>
         </div>
-        <div>
-            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
-            <input type="email" id="email" th:field="*{email}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-        </div>
-        <div>
-            <label for="bloodGroup" class="block text-gray-700 text-sm font-bold mb-2">Nhóm máu:</label>
-            <select id="bloodGroup" th:field="*{bloodGroup}" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                <option value="">Chọn nhóm máu</option>
-                <option th:each="group : ${bloodGroups}" th:value="${group}" th:text="${group}"></option>
-            </select>
-        </div>
-        <div>
-            <label for="address" class="block text-gray-700 text-sm font-bold mb-2">Địa chỉ:</label>
-            <input type="text" id="address" th:field="*{address}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-        </div>
-        <div>
-            <label for="lastDonationDateStr" class="block text-gray-700 text-sm font-bold mb-2">Ngày hiến máu gần nhất (YYYY-MM-DD):</label>
-            <input type="date" id="lastDonationDateStr" name="lastDonationDateStr" th:value="${user.lastDonation}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            <p class="text-sm text-gray-500 mt-1">Để trống nếu chưa hiến máu hoặc không nhớ chính xác. Mặc định 4 tháng trước nếu không nhập.</p>
-        </div>
-        <div class="flex items-center">
-            <input type="checkbox" id="readyToDonate" th:field="*{readyToDonate}" class="form-checkbox h-5 w-5 text-red-600 rounded">
-            <label for="readyToDonate" class="ml-2 text-gray-700 text-sm font-bold">Sẵn sàng hiến máu?</label>
-        </div>
-        <div>
-            <label for="role" class="block text-gray-700 text-sm font-bold mb-2">Vai trò:</label>
-            <select id="role" th:field="*{role}" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                <option th:each="r : ${roles}" th:value="${r}" th:text="${r}" th:selected="${r.name() == 'MEMBER'}"></option>
-            </select>
-            <p class="text-sm text-gray-500 mt-1">Thường là MEMBER cho người hiến máu.</p>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn-primary w-full md:w-auto px-8 py-3">Đăng ký</button>
-        </div>
-    </form>
-
-    <div th:if="${param.registered}" class="mt-6 p-3 bg-green-100 text-green-700 rounded-md text-center">
-        Đăng ký thành công!
+        <span class="text-xl font-bold text-red-600">BloodApp</span>
     </div>
-</div>
+    <nav class="flex-grow">
+        <ul>
+            <li class="mb-2">
+                <a th:href="@{/dashboard}" class="flex items-center p-3 text-gray-700 hover:bg-gray-200 rounded-lg mx-3">
+                    <i class="fas fa-th-large mr-3"></i>
+                    <span>Tổng quan</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a th:href="@{/register}" class="flex items-center p-3 text-gray-700 hover:bg-gray-200 rounded-lg mx-3 active-nav-item">
+                    <i class="fas fa-user-plus mr-3"></i>
+                    <span>Đăng ký Hiến máu</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a th:href="@{/donors}" class="flex items-center p-3 text-gray-700 hover:bg-gray-200 rounded-lg mx-3">
+                    <i class="fas fa-users mr-3"></i>
+                    <span>Tìm Người Hiến Máu</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a th:href="@{/emergency_request}" class="flex items-center p-3 text-gray-700 hover:bg-gray-200 rounded-lg mx-3">
+                    <i class="fas fa-bell mr-3"></i>
+                    <span>Yêu Cầu Khẩn Cấp</span>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a th:href="@{/dashboard}" class="flex items-center p-3 text-gray-700 hover:bg-gray-200 rounded-lg mx-3">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="flex justify-center mt-auto">
+        <button class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-300">
+            <i class="fas fa-cog"></i>
+        </button>
+    </div>
+</aside>
+
+<main class="flex-1 p-8">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Đăng ký Người Hiến Máu</h1>
+
+        <form th:action="@{/register}" th:object="${user}" method="post" class="space-y-6">
+            <div>
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Họ và Tên:</label>
+                <input type="text" id="name" th:field="*{name}" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div>
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input type="email" id="email" th:field="*{email}" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div>
+                <label for="bloodGroup" class="block text-gray-700 text-sm font-bold mb-2">Nhóm Máu:</label>
+                <select id="bloodGroup" th:field="*{bloodGroup}" required
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="">-- Chọn nhóm máu --</option>
+                    <option th:each="bg : ${bloodGroups}" th:value="${bg}" th:text="${bg}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label for="role" class="block text-gray-700 text-sm font-bold mb-2">Vai trò:</label>
+                <select id="role" th:field="*{role}" required
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="">-- Chọn vai trò --</option>
+                    <option th:each="r : ${roles}" th:value="${r}" th:text="${r}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label for="address" class="block text-gray-700 text-sm font-bold mb-2">Địa chỉ:</label>
+                <input type="text" id="address" th:field="*{address}"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div>
+                <label for="lastDonationDate" class="block text-gray-700 text-sm font-bold mb-2">Ngày hiến máu gần nhất (nếu có):</label>
+                <input type="date" id="lastDonationDate" name="lastDonationDateStr"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <p class="text-sm text-gray-600 mt-1">
+                    (Để trống nếu chưa hiến máu hoặc không nhớ, hệ thống sẽ tự động tính toán trạng thái sẵn sàng dựa trên quy định.)
+                </p>
+            </div>
+
+            <div class="flex items-center justify-center">
+                <button type="submit"
+                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline transition duration-300">
+                    Đăng ký
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
 </body>
 </html>
